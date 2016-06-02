@@ -12,7 +12,9 @@ function s(i) {
 	return i;
 }
 $('tr').initialize(function() {
+    $(this).children('td:nth-of-type(3)').text($(this).children('td:nth-of-type(3)').text().split('&nbsp;')[1]);
     $(this).children('td:nth-of-type(2)').html(s($(this).children('td:nth-of-type(2)').text()));
     $(this).children('td:nth-of-type(1)').click(function() { $('#input').val($('#input').val() + $(this).text()); });
 });
 $('head').append('<style type="text/css">tr:nth-child(odd) td:nth-of-type(1) { background:#EEE; } tr:nth-child(odd) td:nth-of-type(2) { background:linear-gradient(to right, #EEE 0%, #f5f5f5 100%); } tr:nth-child(odd) td:nth-of-type(3) { background:#f5f5f5; } td:nth-of-type(1), td:nth-of-type(1) * { cursor:pointer; -webkit-touch-callout:none; -webkit-user-select:none; -khtml-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; } #userlist, #input { background:#f5f5f5; } td:nth-of-type(2) img { max-width:100%; max-height:360px; } td:not(:last-child) { border-right:0; } #userlist div { border-bottom:0; } header { background:linear-gradient(to bottom, #1e5799 0%,#7db9e8 100%); color:#FFF; text-align:center; } .log td:nth-of-type(2) { text-align:center; }</style>');
+$('header').prepend('<a href="LaMenuiserie" target="_blank" style="float:right; color:#FFF; text-decoration:none; padding:20px;">🔨</a>');
