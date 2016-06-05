@@ -1,8 +1,8 @@
 var chbx = $('#chatbox')[0];
 function s(i) {
 	var j = i;
-	i = i.replace(/^(>.*)/gi, '<span style="color:#789922">$1</span>');
-    i = i.replace(/(?:<\/?script|style>)/gi, '-script de merde bloqué- 👌');
+    	i = i.replace(/[\"&<>]/g, function (a){ return { '"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;'}[a]; });
+	i = i.replace(/^(&gt;.*)/gi, '<span style="color:#789922">$1</span>');
 	i = i.replace(/(?:http:\/\/)?(?:\w+)?noelshack.com.free.fr\/(?:\w+)/gi, '-screamer de merde bloqué- 👌');
 	i = i.replace(/(?:https?:\/\/)?(?:www\.)?(noelshack.com)\/(\d{4})-(\d{2})-(\w+)/gi, 'http://image.$1/fichiers/$2/$3/$4');
 	i = i.replace(/(?:https?:\/\/)?(?:www\.)?vocaroo.com\/i\/(\w+)/gi, '<embed src="http://vocaroo.com/player.swf?playMediaID=$1&autoplay=0" width="148" height="44" wmode="transparent" type="application/x-shockwave-flash"></embed>');
