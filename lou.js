@@ -41,7 +41,7 @@ $(function () {
     },
     yAxis: {
       min: 0,
-      max: 180,
+      max: 500,
       minorTickInterval: 'auto',
       minorTickWidth: 1,
       minorTickLength: 5,
@@ -62,15 +62,15 @@ $(function () {
       },
       plotBands: [{
         from: 0,
-        to: 60,
+        to: 100,
         color: '#5B4'
       }, {
-        from: 60,
-        to: 120,
+        from: 100,
+        to: 250,
         color: '#DD0'
       }, {
-        from: 120,
-        to: 180,
+        from: 250,
+        to: 500,
         color: '#D44'
       }]
     },
@@ -91,9 +91,9 @@ $(function () {
       var point = chart.series[0].points[0],
           newVal;
       for (var i = 0; i < timestamps.length; i++)
-        if(timestamps[i] + 60000 < Date.now())
+        if(timestamps[i] + 10000 < Date.now())
         	timestamps.splice(i, 1);
-      newVal = Math.max(0, Math.min(timestamps.length, 180));
+      newVal = Math.max(0, Math.min((timestamps.length * 6), 500));
       point.update(newVal);
     }, 100);
   });
