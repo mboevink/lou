@@ -16,7 +16,7 @@ $('tr').initialize(function() {
     $(this).children('td:nth-of-type(3)').text($(this).children('td:nth-of-type(3)').text().split(',')[1]);
     $(this).children('td:nth-of-type(2)').html(s($(this).children('td:nth-of-type(2)').text()));
     $(this).children('td:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + $(this).text()); });
-    if($('#chatbox')[0].scrollTop - $('#chatbox')[0].scrollHeight > -1100) $('#chatbox').animate({scrollTop:$('#chatbox')[0].scrollHeight}, 250);
+    if($('#chatbox')[0].scrollTop - $('#chatbox')[0].scrollHeight > -1200) $('#chatbox').animate({scrollTop:$('#chatbox')[0].scrollHeight}, 100);
     timestamps.push(Date.now());
 });
 $('main').append('<div id="container" style="width:240px; height:240px; position:fixed; bottom:-50px; right:-27px;"></div>');
