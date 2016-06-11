@@ -58,7 +58,7 @@ $(function () {
       },
       title: {
         text: 'msg/min',
-        y: 10
+        y: 15
       },
       plotBands: [{
         from: 0,
