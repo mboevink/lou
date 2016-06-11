@@ -88,13 +88,13 @@ $(function () {
   },
   function (chart) {
     setInterval(function () {
-      var point = chart.series[0].points[0],
-          newVal;
+      var point = chart.series[0].points[0], newVal, curVal;
       for (var i = 0; i < timestamps.length; i++)
-        if(timestamps[i] + 10000 < Date.now())
+        if(timestamps[i] + 60000 < Date.now())
         	timestamps.splice(i, 1);
-      newVal = Math.max(0, Math.min((timestamps.length * 6), 500));
-      point.update(newVal);
+      newVal = Math.max(0, Math.min((timestamps.length), 500));
+      curVal = (curVal > newVal ? curVal - (curVal * 0.02) : newVal);
+      point.update(curVal);
     }, 100);
   });
 });
