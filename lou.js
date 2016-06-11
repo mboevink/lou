@@ -96,10 +96,10 @@ $(function () {
         else
             break;
       span = (timestamps.length > 1 ? timestamps[timestamps.length -1] - timestamps[0] : 60000);
-      newVal = Math.round(Math.max(0, Math.min(((60000 * timestamps.length) / span), 500)));
-      curVal = (timestamps.length > actVal ? newVal : Math.round(curVal - (curVal * 0.01)));
+      newVal = Math.max(0, Math.min(((60000 * timestamps.length) / span), 500));
+      curVal = (timestamps.length > actVal ? newVal : curVal - (curVal * 0.01));
       actVal = timestamps.length;
-      point.update(curVal);
+      point.update(Math.round(curVal));
     }, 100);
   });
 });
