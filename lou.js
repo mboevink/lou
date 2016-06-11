@@ -79,7 +79,8 @@ $(function () {
       data: [ 0 ],
       dataLabels: {
         borderWidth: 0,
-        y: 20
+        y: 20,
+        style: { fontSize: '16px' }
       },
       dial: {
         rearLength: '20%'
@@ -88,13 +89,16 @@ $(function () {
   },
   function (chart) {
     setInterval(function () {
-      var point = chart.series[0].points[0], newVal;
-      for (var i = 0; i < timestamps.length; i++)
+      var point = chart.series[0].points[0], newVal, span;
+      for(var i = 0; i < timestamps.length; i++)
         if(timestamps[i] + 60000 < Date.now())
         	timestamps.splice(i, 1);
-      newVal = Math.max(0, Math.min((timestamps.length), 500));
-      curVal = (actVal >= newVal ? Math.floor(curVal - (curVal * 0.02)) : newVal);
-      actVal = newVal;
+        else
+            break;
+      span = (timestamps.length > 1 ? timestamps[timestamps.length -1] - timestamps[0] : 60000);
+      newVal = Math.floor(Math.max(0, Math.min(((60000 * timestamps.length) / span), 500)));
+      curVal = (timestamps.length > actVal ? newVal : Math.floor(curVal - (curVal * 0.005)));
+      actVal = timestamps.length;
       point.update(curVal);
     }, 100);
   });
