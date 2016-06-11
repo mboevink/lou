@@ -1,4 +1,4 @@
-var timestamps = [];
+var timestamps = [], actVal = 0, curVal = 0;
 function s(i) {
 	var j = i;
     i = i.replace(/[\"&<>]/g, function (a){ return { '"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;'}[a]; });
@@ -88,12 +88,13 @@ $(function () {
   },
   function (chart) {
     setInterval(function () {
-      var point = chart.series[0].points[0], newVal, curVal;
+      var point = chart.series[0].points[0], newVal;
       for (var i = 0; i < timestamps.length; i++)
         if(timestamps[i] + 60000 < Date.now())
         	timestamps.splice(i, 1);
       newVal = Math.max(0, Math.min((timestamps.length), 500));
-      curVal = (curVal > newVal ? curVal - (curVal * 0.02) : newVal);
+      curVal = (actVal >= newVal ? Math.floor(curVal - (curVal * 0.02)) : newVal);
+      actVal = newVal;
       point.update(curVal);
     }, 100);
   });
