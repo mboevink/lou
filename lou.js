@@ -66,10 +66,10 @@ $(function () {
         color: '#5B4'
       }, {
         from: 100,
-        to: 250,
+        to: 300,
         color: '#DD0'
       }, {
-        from: 250,
+        from: 300,
         to: 500,
         color: '#D44'
       }]
