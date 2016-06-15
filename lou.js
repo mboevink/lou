@@ -1,15 +1,3 @@
-// ==UserScript==
-// @name         Lou++
-// @author       Marill
-// @match        https://loult.family/
-// @match        https://loult.family/*
-// @grant        none
-// @require      https://code.jquery.com/jquery-latest.js
-// @require      https://code.highcharts.com/highcharts.js
-// @require      https://code.highcharts.com/highcharts-more.js
-// @require      https://cdn.rawgit.com/adampietrasiak/jquery.initialize/master/jquery.initialize.js
-// ==/UserScript==
-
 var timestamps = [], actVal = 0, curVal = 0;
 function s(i) {
 	var j = i;
