@@ -38,83 +38,83 @@ try {
     $('#prefs').append('<div><pre style="background:#FFE; border:2px dashed #666; font-size:12px; padding:1em;">08/07/2016 - Mise à jour du scriptennw !<br />Remplacer la ligne :<br />// @require      https://cdn.rawgit.com/adampietrasiak/jquery.initialize/master/jquery.initialize.js<br />Par :<br />// @require      https://cdn.rawgit.com/naugtur/insertionQuery/master/insQ.min.js</pre></div>');
     $('#volrange').prependTo('#sidebtns');
     $('#prefs div:nth-of-type(2)').remove();
+	setTimeout(function () {
+	     $('#container').highcharts({
+	         chart: {
+	             type: 'gauge',
+	             backgroundColor: null
+	         },
+	         title: null,
+	         credits: false,
+	         tooltip: false,
+	         pane: {
+	             size: '95%',
+	             startAngle: -120,
+	             endAngle: 120,
+	             background: null
+	         },
+	         yAxis: {
+	             min: 0,
+	             max: 600,
+	             minorTickInterval: 'auto',
+	             minorTickWidth: 1,
+	             minorTickLength: 5,
+	             minorTickPosition: 'inside',
+	             minorTickColor: '#555',
+	             tickPixelInterval: 30,
+	             tickWidth: 2,
+	             tickPosition: 'inside',
+	             tickLength: 10,
+	             tickColor: '#444',
+	             labels: {
+	                 step: 2,
+	                 rotation: 'auto'
+	             },
+	             title: {
+	                 text: 'msg/min',
+	                 y: 20
+	             },
+	             plotBands: [{
+	                 from: 0,
+	                 to: 200,
+	                 color: '#5B4'
+	             }, {
+	                 from: 200,
+	                 to: 400,
+	                 color: '#DD0'
+	             }, {
+	                 from: 400,
+	                 to: 600,
+	                 color: '#D44'
+	             }]
+	         },
+	         series: [{
+	             name: 'Messages',
+	             data: [ 0 ],
+	             dataLabels: {
+	                 borderWidth: 0,
+	                 y: 10,
+	                 style: { fontSize: '16px' }
+	             },
+	             dial: {
+	                 rearLength: '20%'
+	             }
+	         }]
+	     },
+	     function (chart) {
+	         setInterval(function () {
+	             var point = chart.series[0].points[0], newVal, span;
+	             for(var i = 0; i < timestamps.length; i++)
+	                 if(timestamps[i] + 60000 < Date.now())
+	                     timestamps.splice(i, 1);
+	                 else
+	                     break;
+	             span = (timestamps.length > 1 ? timestamps[timestamps.length -1] - timestamps[0] : 60000);
+	             newVal = Math.max(0, Math.min(((60000 * timestamps.length) / span), 650));
+	             curVal = (timestamps.length > actVal ? newVal : curVal - (curVal * 0.02));
+	             actVal = timestamps.length;
+	             point.update(Math.round(curVal));
+	         }, 200);
+	     });
+	 }, 2000);
 }
-setTimeout(function () {
-     $('#container').highcharts({
-         chart: {
-             type: 'gauge',
-             backgroundColor: null
-         },
-         title: null,
-         credits: false,
-         tooltip: false,
-         pane: {
-             size: '95%',
-             startAngle: -120,
-             endAngle: 120,
-             background: null
-         },
-         yAxis: {
-             min: 0,
-             max: 600,
-             minorTickInterval: 'auto',
-             minorTickWidth: 1,
-             minorTickLength: 5,
-             minorTickPosition: 'inside',
-             minorTickColor: '#555',
-             tickPixelInterval: 30,
-             tickWidth: 2,
-             tickPosition: 'inside',
-             tickLength: 10,
-             tickColor: '#444',
-             labels: {
-                 step: 2,
-                 rotation: 'auto'
-             },
-             title: {
-                 text: 'msg/min',
-                 y: 20
-             },
-             plotBands: [{
-                 from: 0,
-                 to: 200,
-                 color: '#5B4'
-             }, {
-                 from: 200,
-                 to: 400,
-                 color: '#DD0'
-             }, {
-                 from: 400,
-                 to: 600,
-                 color: '#D44'
-             }]
-         },
-         series: [{
-             name: 'Messages',
-             data: [ 0 ],
-             dataLabels: {
-                 borderWidth: 0,
-                 y: 10,
-                 style: { fontSize: '16px' }
-             },
-             dial: {
-                 rearLength: '20%'
-             }
-         }]
-     },
-     function (chart) {
-         setInterval(function () {
-             var point = chart.series[0].points[0], newVal, span;
-             for(var i = 0; i < timestamps.length; i++)
-                 if(timestamps[i] + 60000 < Date.now())
-                     timestamps.splice(i, 1);
-                 else
-                     break;
-             span = (timestamps.length > 1 ? timestamps[timestamps.length -1] - timestamps[0] : 60000);
-             newVal = Math.max(0, Math.min(((60000 * timestamps.length) / span), 650));
-             curVal = (timestamps.length > actVal ? newVal : curVal - (curVal * 0.02));
-             actVal = timestamps.length;
-             point.update(Math.round(curVal));
-         }, 200);
-     });
- }, 500);
