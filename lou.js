@@ -12,25 +12,28 @@ function s(i) {
 	i = i.replace(/[^"](\b(?:https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]\.(webm|mp4|ogg))[^"]/gi, '<video width="480" height="360" controls><source src="$1" type="video/$2"></video>');
 	return i;
 }
-$('tr').initialize(function() {
-    $(this).children('td:nth-of-type(3)').text($(this).children('td:nth-of-type(3)').text().split(',')[1]);
-    $(this).children('td:nth-of-type(2)').html(s($(this).children('td:nth-of-type(2)').text()));
-    $(this).children('td:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + $(this).text()); });
+insertionQ('#chattbl > tr').every(function(element){
+    $(element).children('td:nth-of-type(2)').html(s($(element).children('td:nth-of-type(2)').text()));
+    $(element).children('td:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + $(element).children('td:nth-of-type(1)').text().trim() + ' '); });
     if($('#chatbox')[0].scrollTop - $('#chatbox')[0].scrollHeight > -1200) $('#chatbox').animate({scrollTop:$('#chatbox')[0].scrollHeight}, 100);
     timestamps.push(Date.now());
     if($('#antilag').is(':checked'))
-        $('tr:lt(-50)').remove();
+        $('tr:lt(-30)').remove();
 });
-var baseline = ['Nuit gravement à la santé', 'Petits amours épistolaires', 'DE ?', 'L\'intelligentsia française', 'On ferme une école, on ouvre une prison', 'CIVILISE TOI FILS DE PUTE', 'Rien ne doit être pas pris en vu', 'Comment fais tu pour toucher forêt fameux ?', 'Mauvaise expérience', 'Vous etes bizarre ici :lol:', 'Est-ce que ça changerait quelquechose si tu avais la réponse ?', 'donne mou le facebookt', 'Pourquoi vous faites çaAAAaaaAAAaaaA'];
-$('#nom').append('<small style="display:block;">« ' + baseline[Math.floor(Math.random() * baseline.length)] + ' »</small>');
-$('main').append('<div id="container" style="width:240px; height:240px; position:fixed; bottom:-50px; right:-27px;"></div>');
+insertionQ('#userlist > div').every(function(element){
+    $(element).children('label:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + $(element).children('label:nth-of-type(1)').text() + ' '); });
+});
+var baseline = ['Nuit gravement à la santé', 'Ma patrie c\'est lou.lt', 'Petits amours épistolaires', 'DE ?', 'L\'intelligentsia française', 'L\'agora 2.0', 'On ferme une école, on ouvre une prison', 'CIVILISE TOI FILS DE PUTE', 'Rien ne doit être pas pris en vu', 'Comment fais tu pour toucher forêt fameux ?', 'Mauvaise expérience', 'Vous etes bizarre ici :lol:', 'Est-ce que ça changerait quelquechose si tu avais la réponse ?', 'donne mou le facebookt', 'Pourquoi vous faites çaAAAaaaAAAaaaA'];
+var head = ['url(https://static.tumblr.com/bogk4us/Xrklvfe3l/-pika.jpg) #f0e943 75% -203px no-repeat', 'url(https://i.imgur.com/Gp3ZhI8.jpg) #549fbf 15% 0 / contain no-repeat', 'url(https://s31.postimg.org/74ifa5laz/2314782.jpg) #dc8e4c 80% -45px no-repeat', 'url(https://67.media.tumblr.com/69d9fb85b0c7982bb1bdb753dcaaa684/tumblr_n4nmevqVIX1s2b58zo8_500.jpg) #b399c6 75% -115px no-repeat', 'url(https://66.media.tumblr.com/e13328341a7ccae3e3fe6836d19c6309/tumblr_n4nmevqVIX1s2b58zo3_500.png) #5e85a2 75% -115px no-repeat', 'url(https://67.media.tumblr.com/ebc29ea9a7d1c53db23d0c3ec5210607/tumblr_n4nmevqVIX1s2b58zo1_500.jpg) #f4ea3a 75% -40px no-repeat', 'url(https://img10.deviantart.net/6b03/i/2013/141/c/1/meowth_persian_pokemon_wallpaper_by_thepyzu-d66131b.jpg) #ffe682 75% -425px no-repeat', 'url(https://orig15.deviantart.net/e183/f/2011/288/d/e/arcanine_simplism_wallpaper_by_stonah-d4cvg7x.png) #e95d0e -5px -390px no-repeat', 'url(https://41.media.tumblr.com/11a501ec35542bb4006d799d838e22de/tumblr_n4nmevqVIX1s2b58zo2_500.jpg) #8086c0 75% -105px no-repeat'];
+$('#nom').append('<small style="display:block; z-index:10;">« ' + baseline[Math.floor(Math.random() * baseline.length)] + ' »</small>');
+$('main').append('<div id="container" style="width:185px; height:185px; position:fixed; bottom:-55px; right:0px;"></div>');
 $('main').append('<input type="checkbox" id="antilag" style="position:fixed; bottom:0; right:165px;" />');
-$('head').append('<style type="text/css">header { background:url(http://static.tumblr.com/bogk4us/Xrklvfe3l/-pika.jpg) #f0e943 75% -200px no-repeat; text-align:center; } tr:nth-child(odd) td:nth-of-type(1) { background:#EEE; } tr:nth-child(odd) td:nth-of-type(2) { background:linear-gradient(to right, #EEE 0%, #f5f5f5 100%); } tr:nth-child(odd) td:nth-of-type(3) { background:#f5f5f5; } td:nth-of-type(1), td:nth-of-type(1) * { cursor:pointer; -webkit-touch-callout:none; -webkit-user-select:none; -khtml-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; } #userlist, #input { background:#f5f5f5; } td:nth-of-type(2) img { max-width:100%; max-height:360px; } td:not(:last-child) { border-right:0; } #userlist div:last-of-type { margin-bottom:190px; } #userlist div { border-bottom:0; } #sidebtns { padding-right:0; } #nom { text-shadow:0 1px 1px #666; padding:5px; font-weight:bold; color:#FFF; position:absolute; left:185px; right:310px; } .log td:nth-of-type(2) { text-align:center; } #volrange { position:relative; top:-2px; } label + img { margin-left:0 !important; }</style>');
-$('header').prepend('<a href="LaMenuiserie" target="_blank" style="float:right; color:#000; text-decoration:none; padding:20px 10px;">🔨</a>');
-$('#prefs a:last-of-type').prepend('<img src="http://orig12.deviantart.net/32dd/f/2015/137/c/c/richard_stallman_approves_by_terrance8d-d8tq64f.png" />');
+$('head').append('<style type="text/css">header { background:' + head[Math.floor(Math.random() * head.length)] + '; text-align:center; } td:nth-of-type(3) { font-size:10px; } #userlist div, td:nth-of-type(1), td:nth-of-type(1) * { cursor:pointer; -webkit-touch-callout:none; -webkit-user-select:none; -khtml-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; } #userlist, #input, body, tr { background:#f5f5f5 !important; } td:nth-of-type(2) img { max-width:100%; max-height:360px; } td:not(:last-child) { border-right:0; } #input { text-indent:5px; outline:0; border:0; border-top:1px solid #666; } #userlist { margin-bottom:120px; padding-bottom:5px; border-left:0; } #userlist div { border-bottom:0; } #chat { border-right: 1px solid #666; } #nom { text-shadow:0 1px 1px #666; padding:5px; font-weight:bold; color:#FFF; position:absolute; left:0; right:185px; } .log td:nth-of-type(2) { text-align:center; } #volrange { position:relative; top:-2px; z-index:5; } #cover { z-index:15; } #window { z-index:20; } label + img { position:relative; left:2px; margin-left:0 !important; }</style>');
+$('#prefs div:nth-of-type(5) a').prepend('<img src="https://orig12.deviantart.net/32dd/f/2015/137/c/c/richard_stallman_approves_by_terrance8d-d8tq64f.png" />');
+$('#prefs').append('<div><a href="LaMenuiserie" target="_blank">Salon VIP</a></div>');
+$('#prefs').append('<div><pre style="background:#FFE; border:2px dashed #666; font-size:12px; padding:1em;">08/07/2016 - Mise à jour du scriptennw !<br />Remplacer la ligne :<br />// @require      https://cdn.rawgit.com/adampietrasiak/jquery.initialize/master/jquery.initialize.js<br />Par :<br />// @require      https://cdn.rawgit.com/naugtur/insertionQuery/master/insQ.min.js</pre></div>');
 $('#volrange').prependTo('#sidebtns');
-/* cre pce background:url(http://choualbox.com/Img/138417873956.jpg) center/cover; */
-/* background:linear-gradient(to bottom, #1e5799 0%,#7db9e8 100%); */
+$('#prefs div:nth-of-type(2)').remove();
 $(function () {
   $('#container').highcharts({
     chart: {
@@ -41,8 +44,9 @@ $(function () {
     credits: false,
     tooltip: false,
     pane: {
-      startAngle: -140,
-      endAngle: 140,
+      size: '95%',
+      startAngle: -120,
+      endAngle: 120,
       background: null
     },
     yAxis: {
@@ -59,23 +63,23 @@ $(function () {
       tickLength: 10,
       tickColor: '#444',
       labels: {
-        step: 1,
+        step: 2,
         rotation: 'auto'
       },
       title: {
         text: 'msg/min',
-        y: 15
+        y: 20
       },
       plotBands: [{
         from: 0,
-        to: 100,
+        to: 200,
         color: '#5B4'
       }, {
-        from: 100,
-        to: 300,
+        from: 200,
+        to: 400,
         color: '#DD0'
       }, {
-        from: 300,
+        from: 400,
         to: 600,
         color: '#D44'
       }]
@@ -85,7 +89,7 @@ $(function () {
       data: [ 0 ],
       dataLabels: {
         borderWidth: 0,
-        y: 20,
+        y: 10,
         style: { fontSize: '16px' }
       },
       dial: {
@@ -103,9 +107,9 @@ $(function () {
             break;
       span = (timestamps.length > 1 ? timestamps[timestamps.length -1] - timestamps[0] : 60000);
       newVal = Math.max(0, Math.min(((60000 * timestamps.length) / span), 650));
-      curVal = (timestamps.length > actVal ? newVal : curVal - (curVal * 0.01));
+      curVal = (timestamps.length > actVal ? newVal : curVal - (curVal * 0.02));
       actVal = timestamps.length;
       point.update(Math.round(curVal));
-    }, 100);
+    }, 200);
   });
 });
