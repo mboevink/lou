@@ -39,7 +39,7 @@ try {
     $('#volrange').prependTo('#sidebtns');
     $('#prefs div:nth-of-type(2)').remove();
 }
-$(function () {
+setTimeout(function () {
      $('#container').highcharts({
          chart: {
              type: 'gauge',
@@ -102,7 +102,7 @@ $(function () {
              }
          }]
      },
-                                function (chart) {
+     function (chart) {
          setInterval(function () {
              var point = chart.series[0].points[0], newVal, span;
              for(var i = 0; i < timestamps.length; i++)
@@ -117,4 +117,4 @@ $(function () {
              point.update(Math.round(curVal));
          }, 200);
      });
- });
+ }, 500);
