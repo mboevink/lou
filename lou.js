@@ -15,7 +15,7 @@ function s(i) {
 try {
     $('#prefs').append('<div><pre style="background:#FFE; border:2px dashed #666; font-size:12px; padding:1em;">08/07/2016 - Script à jour<br />bravwe !</pre></div>');
     $(function () {
-        insertionQ('#chattbl > tr').every(function(element){
+   /*     insertionQ('#chattbl > tr').every(function(element){
             $(element).children('td:nth-of-type(2)').html(s($(element).children('td:nth-of-type(2)').text()));
             $(element).children('td:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + $(element).children('td:nth-of-type(1)').text().trim() + ' '); });
             if($('#chatbox')[0].scrollTop - $('#chatbox')[0].scrollHeight > -1200) $('#chatbox').animate({scrollTop:$('#chatbox')[0].scrollHeight}, 100);
@@ -26,7 +26,9 @@ try {
         insertionQ('#userlist > div').every(function(element){
             $(element).children('label:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + $(element).children('label:nth-of-type(1)').text() + ' '); });
         });
-        $('#container').highcharts({
+   */    
+    timestamps.push(Date.now()); timestamps.push(Date.now()); timestamps.push(Date.now()); timestamps.push(Date.now()); timestamps.push(Date.now());
+   $('#container').highcharts({
             chart: {
                 type: 'gauge',
                 backgroundColor: null
