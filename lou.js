@@ -9,21 +9,28 @@ $('main').append('<input type="checkbox" id="hidelog" style="position:fixed; bot
 $('main').append('<input type="checkbox" id="antilag" style="position:fixed; bottom:0; right:165px;" />');
 $('head').append('<style type="text/css">#chatbox { overflow-x:hidden; } #chattbl > tr:not(.backlog, .log:first-of-type) { opacity:0; transition:opacity 200ms; } header { background:' + head[Math.floor(Math.random() * head.length)] + '; text-align:center; } #chat td:nth-of-type(3) { font-size:10px; max-width:60px; width:60px; overflow-x:hidden; } #userlist div, #chat td:nth-of-type(1), #chat td:nth-of-type(1) * { cursor:pointer; -webkit-touch-callout:none; -webkit-user-select:none; -khtml-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; } #userlist, #input, body, tr { background:#f5f5f5 !important; } #chat td:nth-of-type(2) img { max-width:100%; max-height:360px; } #chat td:not(:last-child) { border-right:0; } #input { text-indent:5px; outline:0; border:0; border-top:1px solid #666; } #userlist { margin-bottom:120px; padding-bottom:5px; border-left:0; } #userlist div { border-bottom:0; } #chat { border-right: 1px solid #666; } #nom { text-shadow:0 1px 1px #666; padding:5px; font-weight:bold; color:#FFF; position:absolute; left:0; right:185px; } .log td:nth-of-type(2) { text-align:center; } #volrange { position:relative; top:-2px; z-index:5; } #cover { z-index:15; } #window { z-index:20; } label:not(.sound) { position:relative !important; top:3px !important; } .sound { font-size:23px; } label + img { position:relative; left:2px; margin-left:0 !important; } img { vertical-align:middle; }</style>');
 $('#prefs div:nth-of-type(5) a').prepend('<img src="https://orig12.deviantart.net/32dd/f/2015/137/c/c/richard_stallman_approves_by_terrance8d-d8tq64f.png" />');
+$('#prefs').prepend('<div><input type="checkbox" id="preview" checked><label for="preview"> Images et vidéos</label></div>');
 $('#prefs').append('<div><a href="LaMenuiserie" target="_blank">Salon VIP</a></div>');
 $('#prefs').append('<div><pre style="background:#FFE; border:2px dashed #666; font-size:12px; padding:1em;">08/07/2016 - Mise à jour du scriptennw !<br />Vous pouvez supprimer entièrement la ligne 9, celle qui dit :<br />https://cdn.rawgit.com/adampietrasiak/jquery.initialize/master/jquery.initialize.js<br />Puis la ligne 4, celle qui dit loult.family sans /* à la fin. Le script devrait moins ramer.</pre></div>');
 $('#volrange').prependTo('#sidebtns');
-$('#prefs div:nth-of-type(2)').remove();
+$('#prefs div:nth-of-type(3)').remove();
 function improve(i) {
-    	i = i.replace(/[\"&<>]/gi, function (a){ return { '"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;'}[a]; });
+    i = i.replace(/[\"&<>]/gi, function (a){ return { '"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;'}[a]; });
 	i = i.replace(/^(&gt;.*)/gi, '<span style="color:#789922">$1</span>');
-    	i = i.replace(/:([^:]*):/gi, function (b){ var i = $.inArray(b.slice(1, -1).toLowerCase(), pokemon); return i !== -1 ? ('https://loult.family/pokemon/' + ('000' + (i + 1)).slice(-3) + '.gif') : b; });
+    i = i.replace(/:([^:]*):/gi, function (b){ var i = $.inArray(b.slice(1, -1).toLowerCase(), pokemon); return i !== -1 ? ('https://loult.family/pokemon/' + ('000' + (i + 1)).slice(-3) + '.gif') : b; });
 	i = i.replace(/(?:http:\/\/)?(?:\w+)?noelshack.com.free.fr\/(?:\w+)/gi, '-screamer de merde bloqué- 👌');
-	i = i.replace(/(?:https?:\/\/)?(?:www\.)?(noelshack.com)\/(\d{4})-(\d{2})-(\w+)/gi, 'http://image.$1/fichiers/$2/$3/$4');
 	i = i.replace(/(?:https?:\/\/)?(?:www\.)?vocaroo.com\/i\/(\w+)/gi, '<embed src="/player.swf?playMediaID=$1&autoplay=0" width="148" height="44" wmode="transparent" type="application/x-shockwave-flash"></embed>');
-	i = i.replace(/(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?(?:.*?&(?:amp;)?)?v=|\.be\/)([\w\-]+)(?:&(?:amp;)?[\w\?=]*)?/gi, '<iframe width="480" height="360" src="https://www.youtube-nocookie.com/embed/$1?rel=0" frameborder="0" allowfullscreen></iframe>');
+    if($('#preview').is(':checked'))
+    {
+        i = i.replace(/(?:https?:\/\/)?(?:www\.)?(noelshack.com)\/(\d{4})-(\d{2})-(\w+)/gi, 'http://image.$1/fichiers/$2/$3/$4');
+        i = i.replace(/(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?(?:.*?&(?:amp;)?)?v=|\.be\/)([\w\-]+)(?:&(?:amp;)?[\w\?=]*)?/gi, '<iframe width="480" height="360" src="https://www.youtube-nocookie.com/embed/$1?rel=0" frameborder="0" allowfullscreen></iframe>');
+    }
 	i = i.replace(/(\b(https?):\/\/(?!www\.youtube-nocookie\.com)[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi, '<a href="$1" target="_blank"> $1 </a>');
-	i = i.replace(/[^"](\b(?:https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]\.(jpe?g|gif|png|bmp))[^"]/gi, '<img src="$1" />');
-	i = i.replace(/[^"](\b(?:https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]\.(webm|mp4|ogg))[^"]/gi, '<video width="480" height="360" controls><source src="$1" type="video/$2"></video>');
+    if($('#preview').is(':checked'))
+    {
+        i = i.replace(/[^"](\b(?:https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]\.(jpe?g|gif|png|bmp))[^"]/gi, '<img src="$1" />');
+        i = i.replace(/[^"](\b(?:https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]\.(webm|mp4|ogg))[^"]/gi, '<video width="480" height="360" controls><source src="$1" type="video/$2"></video>');
+    }
 	return i;
 }
 insertionQ('#chattbl > tr').every(function(element){
