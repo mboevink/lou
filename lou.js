@@ -7,7 +7,7 @@ $('#nom').append('<small style="display:block; z-index:10;">« ' + baseline[Math
 $('main').append('<div id="container" style="width:185px; height:185px; position:fixed; bottom:-55px; right:0px;"></div>');
 $('main').append('<input type="checkbox" id="hidelog" style="position:fixed; bottom:20px; right:165px;" />');
 $('main').append('<input type="checkbox" id="antilag" style="position:fixed; bottom:0; right:165px;" />');
-$('head').append('<style type="text/css">#chatbox { overflow-x:hidden; } #chattbl > tr:not(.backlog) { opacity:0; transition:opacity 200ms; } header { background:' + head[Math.floor(Math.random() * head.length)] + '; text-align:center; } #chat td:nth-of-type(3) { font-size:10px; max-width:60px; width:60px; } #userlist div, #chat td:nth-of-type(1), #chat td:nth-of-type(1) * { cursor:pointer; -webkit-touch-callout:none; -webkit-user-select:none; -khtml-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; } #userlist, #input, body, tr { background:#f5f5f5 !important; } #chat td:nth-of-type(2) img { max-width:100%; max-height:360px; } #chat td:not(:last-child) { border-right:0; } #input { text-indent:5px; outline:0; border:0; border-top:1px solid #666; } #userlist { margin-bottom:120px; padding-bottom:5px; border-left:0; } #userlist div { border-bottom:0; } #chat { border-right: 1px solid #666; } #nom { text-shadow:0 1px 1px #666; padding:5px; font-weight:bold; color:#FFF; position:absolute; left:0; right:185px; } .log td:nth-of-type(2) { text-align:center; } #volrange { position:relative; top:-2px; z-index:5; } #cover { z-index:15; } #window { z-index:20; } label + img { position:relative; left:2px; margin-left:0 !important; }</style>');
+$('head').append('<style type="text/css">#chatbox { overflow-x:hidden; } #chattbl > tr:not(.backlog, .log:first-of-type) { opacity:0; transition:opacity 200ms; } header { background:' + head[Math.floor(Math.random() * head.length)] + '; text-align:center; } #chat td:nth-of-type(3) { font-size:10px; max-width:60px; width:60px; overflow-x:hidden; } #userlist div, #chat td:nth-of-type(1), #chat td:nth-of-type(1) * { cursor:pointer; -webkit-touch-callout:none; -webkit-user-select:none; -khtml-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; } #userlist, #input, body, tr { background:#f5f5f5 !important; } #chat td:nth-of-type(2) img { max-width:100%; max-height:360px; } #chat td:not(:last-child) { border-right:0; } #input { text-indent:5px; outline:0; border:0; border-top:1px solid #666; } #userlist { margin-bottom:120px; padding-bottom:5px; border-left:0; } #userlist div { border-bottom:0; } #chat { border-right: 1px solid #666; } #nom { text-shadow:0 1px 1px #666; padding:5px; font-weight:bold; color:#FFF; position:absolute; left:0; right:185px; } .log td:nth-of-type(2) { text-align:center; } #volrange { position:relative; top:-2px; z-index:5; } #cover { z-index:15; } #window { z-index:20; } label { position:relative !important; top:3px !important; } label + img { position:relative; left:2px; margin-left:0 !important; } img { vertical-align:middle; }</style>');
 $('#prefs div:nth-of-type(5) a').prepend('<img src="https://orig12.deviantart.net/32dd/f/2015/137/c/c/richard_stallman_approves_by_terrance8d-d8tq64f.png" />');
 $('#prefs').append('<div><a href="LaMenuiserie" target="_blank">Salon VIP</a></div>');
 $('#prefs').append('<div><pre style="background:#FFE; border:2px dashed #666; font-size:12px; padding:1em;">08/07/2016 - Mise à jour du scriptennw !<br />Vous pouvez supprimer entièrement la ligne 9, celle qui dit :<br />https://cdn.rawgit.com/adampietrasiak/jquery.initialize/master/jquery.initialize.js<br />Puis la ligne 4, celle qui dit loult.family sans /* à la fin. Le script devrait moins ramer.</pre></div>');
@@ -16,7 +16,7 @@ $('#prefs div:nth-of-type(2)').remove();
 function improve(i) {
     i = i.replace(/[\"&<>]/gi, function (a){ return { '"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;'}[a]; });
 	i = i.replace(/^(&gt;.*)/gi, '<span style="color:#789922">$1</span>');
-    i = i.replace(/:(\w+):/gi, function (b){ var i = $.inArray(b.slice(1, -1).toLowerCase(), pokemon); return i !== -1 ? ('https://loult.family/pokemon/' + ('000' + (i + 1)).slice(-3) + '.gif') : b; });
+    i = i.replace(/:([^:]*):/gi, function (b){ var i = $.inArray(b.slice(1, -1).toLowerCase(), pokemon); return i !== -1 ? ('https://loult.family/pokemon/' + ('000' + (i + 1)).slice(-3) + '.gif') : b; });
 	i = i.replace(/(?:http:\/\/)?(?:\w+)?noelshack.com.free.fr\/(?:\w+)/gi, '-screamer de merde bloqué- 👌');
 	i = i.replace(/(?:https?:\/\/)?(?:www\.)?(noelshack.com)\/(\d{4})-(\d{2})-(\w+)/gi, 'http://image.$1/fichiers/$2/$3/$4');
 	i = i.replace(/(?:https?:\/\/)?(?:www\.)?vocaroo.com\/i\/(\w+)/gi, '<embed src="/player.swf?playMediaID=$1&autoplay=0" width="148" height="44" wmode="transparent" type="application/x-shockwave-flash"></embed>');
@@ -29,11 +29,12 @@ function improve(i) {
 insertionQ('#chattbl > tr').every(function(element){
     var t = $(element).children('td:nth-of-type(2)').text();
     var r = improve(t);
-    $(element).children('td:nth-of-type(3)').html(new Date().toLocaleString('fr-FR', {hour: '2-digit', minute:'2-digit', second:'2-digit'}));
-    $(element).children('td:nth-of-type(2)').html(r);
-    $(element).children('td:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + ':' + $(element).children('td:nth-of-type(1)').text().trim() + ': '); });
     if(r !== t && $('#chatbox')[0].scrollTop - $('#chatbox')[0].scrollHeight > -900)
         setTimeout($('#chatbox').animate({scrollTop:$('#chatbox')[0].scrollHeight + 500}, 100), 500);
+    $(element).children('td:nth-of-type(3)').html(new Date().toLocaleString('fr-FR', {hour: '2-digit', minute:'2-digit', second:'2-digit'}));
+    $(element).children('td:nth-of-type(2)').html(r);
+    if(!$(element).hasClass('log'))
+        $(element).children('td:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + ' :' + $(element).children('td:nth-of-type(1)').text().trim() + ': '); });
     timestamps.push(Date.now());
     if($('#antilag').is(':checked'))
         $('tr:lt(-30)').remove();
@@ -43,7 +44,7 @@ insertionQ('#chattbl > tr').every(function(element){
         $(element).hide();
 });
 insertionQ('#userlist > div').every(function(element){
-    $(element).children('label:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + ':' + $(element).children('label:nth-of-type(1)').text() + ': '); });
+    $(element).children('label:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + ' :' + $(element).children('label:nth-of-type(1)').text() + ': '); });
 });
 $(function () {
     $('#hidelog').change(function() {
@@ -54,66 +55,11 @@ $(function () {
         setTimeout($('#chatbox').animate({scrollTop:$('#chatbox')[0].scrollHeight + 500}, 100), 500);
     });
     $('#container').highcharts({
-        chart: {
-            type: 'gauge',
-            backgroundColor: null
-        },
-        title: null,
-        credits: false,
-        tooltip: false,
-        pane: {
-            size: '95%',
-            startAngle: -120,
-            endAngle: 120,
-            background: null
-        },
+        chart: { type: 'gauge', backgroundColor: null }, title: null, credits: false, tooltip: false, pane: { size: '95%', startAngle: -120, endAngle: 120, background: null },
         yAxis: {
-            min: 0,
-            max: 600,
-            minorTickInterval: 'auto',
-            minorTickWidth: 1,
-            minorTickLength: 5,
-            minorTickPosition: 'inside',
-            minorTickColor: '#555',
-            tickPixelInterval: 30,
-            tickWidth: 2,
-            tickPosition: 'inside',
-            tickLength: 10,
-            tickColor: '#444',
-            labels: {
-                step: 2,
-                rotation: 'auto'
-            },
-            title: {
-                text: 'msg/min',
-                y: 20
-            },
-            plotBands: [{
-                from: 0,
-                to: 200,
-                color: '#5B4'
-            }, {
-                from: 200,
-                to: 400,
-                color: '#DD0'
-            }, {
-                from: 400,
-                to: 600,
-                color: '#D44'
-            }]
-        },
-        series: [{
-            name: 'Messages',
-            data: [ 0 ],
-            dataLabels: {
-                borderWidth: 0,
-                y: 10,
-                style: { fontSize: '16px' }
-            },
-            dial: {
-                rearLength: '20%'
-            }
-        }]
+            min: 0, max: 600, minorTickInterval: 'auto', minorTickWidth: 1, minorTickLength: 5, minorTickPosition: 'inside', minorTickColor: '#555', tickPixelInterval: 30, tickWidth: 2, tickPosition: 'inside', tickLength: 10, tickColor: '#444',
+            labels: { step: 2, rotation: 'auto' }, title: { text: 'msg/min', y: 20 }, plotBands: [{ from: 0, to: 200, color: '#5B4' }, { from: 200, to: 400, color: '#DD0' }, { from: 400, to: 600, color: '#D44' }] },
+        series: [{ name: 'Messages', data: [ 0 ], dataLabels: { borderWidth: 0, y: 10, style: { fontSize: '16px' } }, dial: { rearLength: '20%' } }]
     },
     function (chart) {
         setInterval(function () {
