@@ -18,7 +18,7 @@ function improve(i) {
 	i = i.replace(/[\"&<>]/gi, function (a){ return { '"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;'}[a]; });
 	i = i.replace(/^(&gt;.*)/gi, '<span style="color:#789922">$1</span>');
 	i = i.replace(/-([^-]*)-/gi, function (b){ var i = $.inArray(b.slice(1, -1).toLowerCase(), pokemon); return i !== -1 ? ('https://loult.family/pokemon/' + ('000' + (i + 1)).slice(-3) + '.gif') : b; });
-	i = i.replace(/(?:http:\/\/)?(?:\w+)?(noelshack.com.free.fr|fbcdn-sphotos-e-a.hubatka.cz)\/(?:\w+)/gi, '-screamer de merde bloqué- 👌');
+	i = i.replace(/(?:http:\/\/)?(?:\w+)?(noelshack.comm.free.fr|fbcdn-sphotos-e-a.hubatka.cz)\/(?:\w+)?/gi, '-screamer de merde bloqué- 👌');
 	i = i.replace(/(?:https?:\/\/)?(?:www\.)?vocaroo.com\/i\/(\w+)/gi, '<embed src="/player.swf?playMediaID=$1&autoplay=0" width="148" height="44" wmode="transparent" type="application/x-shockwave-flash"></embed>');
     if($('#preview').is(':checked'))
     {
