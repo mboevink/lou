@@ -5,9 +5,9 @@ var head = ['url(https://static.tumblr.com/bogk4us/Xrklvfe3l/-pika.jpg) #f0e943 
 var timestamps = [], actVal = 0, curVal = 0;
 $('#nom').append('<small style="display:block; z-index:10;">« ' + baseline[Math.floor(Math.random() * baseline.length)] + ' »</small>');
 $('main').append('<div id="container" style="width:185px; height:185px; position:fixed; bottom:-55px; right:0px;"></div>');
-$('main').append('<input type="checkbox" id="hidelog" style="position:fixed; bottom:20px; right:165px;" />');
-$('main').append('<input type="checkbox" id="antilag" style="position:fixed; bottom:0; right:165px;" />');
-$('head').append('<style type="text/css">#chatbox { overflow-x:hidden; } #chattbl > tr:not(.backlog, .log:first-of-type) { opacity:0; transition:opacity 200ms; } header { background:' + head[Math.floor(Math.random() * head.length)] + '; text-align:center; } #chat td:nth-of-type(3) { font-size:10px; max-width:60px; width:60px; overflow-x:hidden; } #userlist div, #chat td:nth-of-type(1), #chat td:nth-of-type(1) * { cursor:pointer; -webkit-touch-callout:none; -webkit-user-select:none; -khtml-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; } #userlist, #input, body, tr { background:#f5f5f5 !important; } #chat td:nth-of-type(2) img { max-width:100%; max-height:360px; } #chat td:not(:last-child) { border-right:0; } #input { text-indent:5px; outline:0; border:0; border-top:1px solid #666; } #userlist { margin-bottom:120px; padding-bottom:5px; border-left:0; } #userlist div { border-bottom:0; } #chat { border-right: 1px solid #666; } #nom { text-shadow:0 1px 1px #666; padding:5px; font-weight:bold; color:#FFF; position:absolute; left:0; right:185px; } .log td:nth-of-type(2) { text-align:center; } #volrange { position:relative; top:-2px; z-index:5; } #cover { z-index:15; } #window { z-index:20; } label:not(.sound) { position:relative !important; top:3px !important; } .sound { font-size:23px; } label + img { position:relative; left:2px; margin-left:0 !important; } img { vertical-align:middle; }</style>');
+$('main').append('<div class="mod" style="bottom:71px; right:158px;"><label style="float:left; color:#FFF; padding:0 5px;">Cacher infos</label><input type="checkbox" id="hidelog" /></div>');
+$('main').append('<div class="mod" style="bottom:93px; right:141px"><label style="float:left; color:#FFF; padding:0 5px;">Anti flood</label><input type="checkbox" id="antilag" /></div>');
+$('head').append('<style type="text/css">.mod { position:fixed; background:silver; border-radius:20px; padding:2px; border:1px solid #666; } #chatbox { overflow-x:hidden; display:flex; flex-direction:column-reverse; } #chattbl > tr:not(.backlog, .log:first-of-type) { opacity:0; transition:opacity 200ms; } header { background:' + head[Math.floor(Math.random() * head.length)] + '; text-align:center; } td:nth-of-type(3) { display:none; } #chat small { font-size:10px; float:right; max-width:60px; width:60px; overflow-x:hidden; } #userlist div, #chat td:nth-of-type(1), #chat td:nth-of-type(1) * { cursor:pointer; -webkit-touch-callout:none; -webkit-user-select:none; -khtml-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; } #userlist, #input, body, tr { background:#f5f5f5 !important; } #chat td:nth-of-type(2) img { max-width:100%; max-height:360px; } #chat td:not(:last-child) { border-right:0; } #input { text-indent:5px; outline:0; border:0; border-top:1px solid #666; } #userlist { margin-bottom:120px; padding-bottom:5px; border-left:0; } #userlist div { border-bottom:0; } #chat { border-right: 1px solid #666; } #nom { text-shadow:0 1px 1px #666; padding:5px; font-weight:bold; color:#FFF; position:absolute; left:0; right:185px; } .log td:nth-of-type(2) { text-align:center; } #volrange { position:relative; top:-2px; z-index:5; } #cover { z-index:15; } #window { z-index:20; } label:not(.sound) { position:relative !important; top:3px !important; } .sound { font-size:23px; } label + img { position:relative; left:2px; margin-left:0 !important; } img { vertical-align:middle; } #chattbl > tr:nth-of-type(1) { opacity:0.2 !important; } #chattbl > tr:nth-of-type(2) { opacity:0.4 !important; } #chattbl > tr:nth-of-type(3) { opacity:0.6 !important; } #chattbl > tr:nth-of-type(4) { opacity:0.8 !important; } .mod > label { display:none; } .mod:hover > label { display:inline-block; }</style>');
 $('#prefs div:nth-of-type(5) a').prepend('<img src="https://orig12.deviantart.net/32dd/f/2015/137/c/c/richard_stallman_approves_by_terrance8d-d8tq64f.png" />');
 $('#prefs').prepend('<div><input type="checkbox" id="preview" checked><label for="preview"> Images et vidéos</label></div>');
 $('#prefs').append('<div><a href="LaMenuiserie" target="_blank">Salon VIP</a></div>');
@@ -36,24 +36,28 @@ function improve(i) {
 insertionQ('#chattbl > tr').every(function(element){
     var t = $(element).children('td:nth-of-type(2)').text();
     var r = improve(t);
-    if(r !== t && $('#chatbox')[0].scrollTop - $('#chatbox')[0].scrollHeight > -900)
-        setTimeout($('#chatbox').animate({scrollTop:$('#chatbox')[0].scrollHeight + 500}, 100), 500);
-    $(element).children('td:nth-of-type(3)').html(new Date().toLocaleString('fr-FR', {hour: '2-digit', minute:'2-digit', second:'2-digit'}));
-    $(element).children('td:nth-of-type(2)').html(r);
+    if(typeof bot !== 'undefined' && bot === true)
+        respond(t);
+//    if(r !== t && $('#chatbox')[0].scrollTop - $('#chatbox')[0].scrollHeight > -900)
+ //       setTimeout($('#chatbox').animate({scrollTop:$('#chatbox')[0].scrollHeight + 500}, 100), 500);
     if(!$(element).hasClass('log'))
+    {
+        $(element).children('td:nth-of-type(2)').html(r + '<small>' + new Date().toLocaleString('fr-FR', {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + '</small>');
         $(element).children('td:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + ' -' + $(element).children('td:nth-of-type(1)').text().trim() + '- '); });
+    }
     timestamps.push(Date.now());
     if($('#antilag').is(':checked'))
-        $('tr:lt(-30)').remove();
+        $('tr:lt(-20)').remove();
     if(!$(element).hasClass('log') || ($(element).hasClass('log') && !$('#hidelog').is(':checked')))
         $(element).css('opacity', '1');
     else
         $(element).hide();
 });
 insertionQ('#userlist > div').every(function(element){
-    $(element).children('label:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + ' -' + $(element).children('label:nth-of-type(1)').text() + '- '); });
+    $(element).children('label:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + ' -' + $(this).text() + '- '); });
 });
 $(function () {
+    $('#userlist > div label:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + ' -' + $(this).text() + '- '); });
     $('#hidelog').change(function() {
         if($(this).is(':checked'))
             $('.log').hide();
