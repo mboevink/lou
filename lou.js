@@ -49,7 +49,8 @@ insertionQ('#chattbl > tr').every(function(element){
     var r = improve(t);
     if(!l)
     {
-        $(element).children('td:nth-of-type(1)').append('<img src="https://vignette3.wikia.nocookie.net/runescape2/images/9/97/Pinata_sombrero.png" style="width:27px; height:13px;" />');
+        if(current === 'la semana')
+            $(element).children('td:nth-of-type(1)').append('<img src="https://vignette3.wikia.nocookie.net/runescape2/images/9/97/Pinata_sombrero.png" style="width:27px; height:13px;" />');
         $(element).children('td:nth-of-type(2)').html(r); // '<small>' + new Date().toLocaleString('fr-FR', {hour: '2-digit', minute:'2-digit', second:'2-digit'}) + '</small>'
         $(element).children('td:nth-of-type(1)').click(function(){ $('#input').val($('#input').val() + ' -' + $(element).children('td:nth-of-type(1)').text().trim() + '- '); });
     }
